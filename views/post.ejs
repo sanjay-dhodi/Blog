@@ -1,0 +1,17 @@
+<%- include("includes/header") -%>
+<!--  -->
+<% if(postData){ %>
+
+<div class="container singlePostBox">
+  <h1 class="title"><%= postData.title %></h1>
+  <img
+    src=" postimages/<%= postData.image%>"
+    alt="Morning blog post image"
+    class="post-image postPage-img"
+  />
+
+  <p class="desc postPage-desc"><%= postData.desc %></p>
+</div>
+<% } %>
+<!--  -->
+<%- include("includes/footer") -%>

@@ -1,0 +1,92 @@
+<%- include("../includes/header") -%>
+
+<h2>Create a Post</h2>
+
+<div class="admin-form-box">
+  <form
+    class="admin"
+    action="/api/post"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <label for="postTitle">Post Title:</label>
+    <input type="text" id="postTitle" name="title" />
+
+    <label for="postImage">Upload Image:</label>
+    <input type="file" id="postImage" name="image" accept="image/*" />
+
+    <label for="postDescription">Post Description:</label>
+    <textarea id="postDescription" name="desc" rows="4"></textarea>
+
+    <input type="submit" value="Create" />
+  </form>
+</div>
+
+<!-- post data  -->
+<div class="admin-form-box">
+  <h2>Post Data</h2>
+
+  <% if (postData){ let index = 1; %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Sr no</th>
+        <th>Post Image</th>
+        <th>Post Title</th>
+
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%postData.forEach(post=>{ %>
+
+      <tr>
+        <td><%= index %></td>
+        <td>
+          <img
+            width="50px"
+            height="20px"
+            src="postimages/<%= post.image %>"
+            alt=""
+          />
+        </td>
+        <td><%= post.title.substr(0,30) %></td>
+
+        <td class="actions">
+          <a href="/api/post/update/<%= post._id%>"> <button>Edit</button></a>
+          <button onclick="deletePost('<%= post._id%>')">Delete</button>
+        </td>
+      </tr>
+
+      <% index++ })%>
+      <!-- Add more rows as needed -->
+    </tbody>
+  </table>
+
+  <%}else{%>
+
+  <h3 style="text-align: center; margin: 1rem; color: red">
+    no post available please create
+  </h3>
+
+  <%}%>
+</div>
+
+<script>
+  function deletePost(value) {
+    fetch("/api/post/delete/" + value, { method: "DELETE" })
+      .then((response) => {
+        if (!response.ok) {
+          console.log("delete fail");
+        }
+        if (response.ok) {
+          // location.reload();
+          window.location.href = "/admin";
+        }
+      })
+      .catch((err) => console.log("error in deleing post api" + err));
+  }
+</script>
+
+<%- include("../includes/footer") -%>

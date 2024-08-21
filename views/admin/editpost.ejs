@@ -1,0 +1,69 @@
+<%- include("../includes/header") -%>
+<h2>Edit Post</h2>
+
+<div class="admin-form-box">
+  <form
+    id="update_form"
+    class="admin"
+    action="/"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <label for="postTitle">Post Title:</label>
+    <input
+      type="text"
+      id="postTitle"
+      value="<%= (postData) ? postData.title : ''   %>"
+      name="title"
+      required
+    />
+
+    <label for="postImage">Upload Image:</label>
+    <input type="file" id="postImage" name="image" accept="image/*" required />
+
+    <label for="postDescription">Post Description:</label>
+    <textarea
+      id="postDescription"
+      value="<%= (postData) ? postData.desc : ''   %>"
+      name="desc"
+      rows="4"
+      required
+    >
+    <%= (postData)?postData.desc :''   %>
+</textarea
+    >
+
+    <input
+      class="btn"
+      type="button"
+      value="Edit"
+      onclick="editPost('<%= postData._id %>')"
+    />
+  </form>
+</div>
+
+<script>
+  const editPost = async (id) => {
+    const editForm = document.getElementById("update_form");
+    const formData = new FormData(editForm);
+
+    formData.forEach((value) => {
+      console.log(value);
+    });
+
+    try {
+      const response = await fetch("/api/post/update/" + id, {
+        method: "PUT",
+        body: formData,
+      });
+      if (response.ok) {
+        window.location.href = "/admin";
+        // window.location.reload();
+      } else {
+        console.error("update failed");
+      }
+    } catch (error) {
+      console.error("error in update api" + error);
+    }
+  };
+</script>

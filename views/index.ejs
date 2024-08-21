@@ -1,0 +1,37 @@
+<%- include("includes/header") -%>
+
+<div class="feature-img">
+  <div class="container flex-container">
+    <h1 class="feature-text">
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem, est! Ullam
+      optio error amet eius nostrum mollitia est numquam nemo dolore temporibus
+      quod, assumenda corrupti dolorem sint? Praesentium, animi sit!
+    </h1>
+  </div>
+</div>
+
+<div class="posts">
+  <div class="container">
+    <% if(postData) { postData.forEach(post=>{ %>
+
+    <div class="post-box">
+      <img
+        src="postimages/<%= post.image %>"
+        alt="post image"
+        class="post-image"
+      />
+
+      <div class="post-text-data">
+        <h4 class="post-title"><%= post.title.substr(0,50) %></h4>
+        <p class="post-description"><%= post.desc.substr(0.150) %></p>
+        <a href="http://localhost:8080/api/post/<%= post._id %>"
+          ><button class="read-btn">Read more....</button></a
+        >
+      </div>
+    </div>
+
+    <%})}%>
+  </div>
+</div>
+
+<%- include("includes/footer") -%>
