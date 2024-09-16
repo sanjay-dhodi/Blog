@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 const verifyUser = (req, resp, next) => {
   const token = req.cookies["access_token"];
-
+  //
   if (!token) {
     next(new Error("no token found | need login to access this page"));
   }
