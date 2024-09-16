@@ -3,11 +3,9 @@ const jwt = require("jsonwebtoken");
 
 const verifyUser = (req, resp, next) => {
   const token = req.cookies["access_token"];
-  // const token = "ssssssssssssss";
 
   if (!token) {
     next(new Error("no token found | need login to access this page"));
-    // resp.redirect("/admin/login");
   }
 
   if (token) {
